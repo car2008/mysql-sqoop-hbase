@@ -171,11 +171,11 @@ select count(1) from u_sample_copy2;
 ./sqoop export --connect jdbc:mysql://yarn001:3306/experiment_datas --username root --password root --table u_sample_copy2 --columns sample_id,sample_type,sample_current_quantity,sample_unit,sample_empirical_method,sample_current_level,sample_parent_level,samplegrade,sample_notes,patient_id,cancer_type,clinicaldiagnosis,pathologicdiagnosis,is_project_sample,app_order_id,app_sample_id,receiveddt,u_deadline,collectiondt,record_create_date,record_update_date --export-dir /user/hive/warehouse/u_sample_copy2 --input-fields-terminated-by '\t' ;
 ```
 ### 测试7（从hive到hbase）通过测试 采用！！！！！！！！！
-1.在hbase中创建表及columnfamily
+1. 在hbase中创建表及columnfamily
 ```
 create 'experiment_datas','u_sample'
 ```
-2.hive中创建外部表与hbase中的表关联
+2. hive中创建外部表与hbase中的表关联
 ```
 CREATE EXTERNAL TABLE experiment_datas.u_sample_copy3 (sample_id string,sample_type string ,sample_current_quantity double,
 sample_unit String,sample_empirical_method string,sample_current_level string,sample_parent_level string,samplegrade String,
@@ -193,7 +193,7 @@ record_create_date TIMESTAMP,record_update_date TIMESTAMP)
    TBLPROPERTIES( "hbase.table.name" = "experiment_datas",
     "hbase.mapred.output.outputtable" = "experiment_datas");
 ```
-3.将hive中内部表的数据导入上面创建的外部表，则可在hbase中查看数据
+3. 将hive中内部表的数据导入上面创建的外部表，则可在hbase中查看数据
 ```
 insert overwrite table experiment_datas.u_sample_copy3 select * from experiment_datas.u_sample_copy2;
 ```
