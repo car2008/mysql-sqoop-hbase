@@ -165,11 +165,20 @@ select count(1) from u_sample_copy2;
 ```
 ### 测试6 （mysql与hive导入导出）通过测试 采用！！！！！！！！！
 ```
-./sqoop import --connect jdbc:mysql://yarn001:3306/experiment_datas --username root --password root --table u_sample --hive-import --target-dir /user/hive/warehouse/ --hive-table u_sample_copy2 -m 1 --hive-overwrite --hive-delims-replacement "|" --fields-terminated-by "\t" 
+./sqoop import --connect jdbc:mysql://yarn001:3306/experiment_datas --username root --password root --table u_sample --hive-import --target-dir /user/hive/warehouse/ --hive-table u_sample_copy2 -m 1 --hive-overwrite --hive-delims-replacement "|" --fields-terminated-by "\t" --null-string '\\N' --null-non-string '\\N';
 ```
+参数解读：
+* --hive-overwrite ：对这个表的数据进行覆盖
+* --hive-delims-replacement "|" ：自动在导入时把\n和\r换成|，防止因为换行符造成记录条数增加
+* --fields-terminated-by "\t" ： 当mysql中的数据导入到hdfs中，默认使用的分隔符是逗号，可配置
+* --null-string '\\N' --null-non-string '\\N' ：Sqoop默认将NULL值导入为字符串NULL，然而，Hive使用\N来表示NULL值
 ```
-./sqoop export --connect jdbc:mysql://yarn001:3306/experiment_datas --username root --password root --table u_sample_copy2 --columns sample_id,sample_type,sample_current_quantity,sample_unit,sample_empirical_method,sample_current_level,sample_parent_level,samplegrade,sample_notes,patient_id,cancer_type,clinicaldiagnosis,pathologicdiagnosis,is_project_sample,app_order_id,app_sample_id,receiveddt,u_deadline,collectiondt,record_create_date,record_update_date --export-dir /user/hive/warehouse/u_sample_copy2 --input-fields-terminated-by '\t' ;
+./sqoop export --connect jdbc:mysql://yarn001:3306/experiment_datas --username root --password root --table u_sample_copy2 --columns sample_id,sample_type,sample_current_quantity,sample_unit,sample_empirical_method,sample_current_level,sample_parent_level,samplegrade,sample_notes,patient_id,cancer_type,clinicaldiagnosis,pathologicdiagnosis,is_project_sample,app_order_id,app_sample_id,receiveddt,u_deadline,collectiondt,record_create_date,record_update_date --export-dir /user/hive/warehouse/u_sample_copy2 --input-fields-terminated-by '\t' --input-null-string '\\N' --input-null-non-string '\\N';
 ```
+参数解读：
+* --columns ：要导出的列名
+*  --input-fields-terminated-by '\t' ：与导入时对应的分隔符
+* --input-null-string '\\N' --input-null-non-string '\\N' ： 在导入作业时，应该追加参数—NULL字符串和—NULL -non-string;在导出作业时，如果希望正确地保留NULL值，则应该追加参数—input-null-string和—input-null-non-string
 ### 测试7（从hive到hbase）通过测试 采用！！！！！！！！！
 1. 在hbase中创建表及columnfamily
 ```
