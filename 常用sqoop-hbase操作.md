@@ -169,7 +169,7 @@ select count(1) from u_sample_copy2;
 ```
 参数解读：
 * --hive-overwrite ：对这个表的数据进行覆盖
-* --hive-delims-replacement "|" ：自动在导入时把\n和\r换成|，防止因为换行符造成记录条数增加；也可以使用--hive-drop-import-delims把这些去除
+* --hive-delims-replacement "|" ：[自动在导入时把\n和\r换成|，防止因为换行符造成记录条数增加；也可以使用--hive-drop-import-delims把这些去除](https://stackoverflow.com/questions/28076200/hive-drop-import-delims-not-removing-newline-while-using-hcatalog-in-sqoop)
 * --fields-terminated-by "\t" ： 当mysql中的数据导入到hdfs中，默认使用的分隔符是逗号，可配置
 * --null-string '\\N' --null-non-string '\\N' ：Sqoop默认将NULL值导入为字符串NULL，然而，Hive使用\N来表示NULL值
 ```
