@@ -7,6 +7,7 @@
 ### 测试1
 hive读取hbase的数据：
 创建外部表：
+[row-key为组合列时需要拆分](https://cwiki.apache.org/confluence/display/Hive/HBaseIntegration#HBaseIntegration-SimpleCompositeRowKeys)
 ```
 CREATE EXTERNAL TABLE experiment_datas.u_sample_copy1 (key struct<sample_id:string,sample_type:string>,sample_current_quantity double,
 sample_unit String,sample_empirical_method string,sample_current_level string,sample_parent_level string,samplegrade String,
