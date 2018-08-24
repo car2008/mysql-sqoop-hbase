@@ -9,3 +9,11 @@
 	注意：打开之后最好把配置文件改一下，防止自动把空字符创换为null：
 	在"编辑"栏下选择"编辑kettle.properties文件"中KETTLE_EMPTY_STRING_DIFFERS_FROM_NULL=Y，注意修改完要重启一下才能生效，要不然还是会报错!!!
 #### 点击转换，然后点击核心对象配置导入导出表
+#### 优化：
+连接数据库时配置
+```
+useServerPrepStmts=false
+rewriteBatchedStatements=true
+useCompression=true
+```
+可以十分明显提高读取和插入速度，将日志可以设为错误日志级别
