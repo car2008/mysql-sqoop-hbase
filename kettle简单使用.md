@@ -1,5 +1,5 @@
 # kettle简单使用
-### [点击下载](kettle:https://sourceforge.net/projects/pentaho/files/Data%20Integration/7.1/pdi-ce-7.1.0.0-12.zip/download) </br>
+[点击下载](kettle:https://sourceforge.net/projects/pentaho/files/Data%20Integration/7.1/pdi-ce-7.1.0.0-12.zip/download) </br>
 下载完成是一个zip压缩包:pdi-ce-7.1.0.0-12.zip
 #### 如果在windows下使用,则在解压后需要先做一下步骤再启动：
 	1. [下载infobright_jni_64bit.dll或者infobright_jni_32bit.dll](https://github.com/EidosMedia/infobright-core/tree/master/lib)
