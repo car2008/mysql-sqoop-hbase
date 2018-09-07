@@ -18,10 +18,10 @@ COLLECTION ITEMS TERMINATED BY ':'
 ### 再处理string类型的json
 
  ``` 
-select rr.sample_id,rr.gene,rr.locus,rr.detection_result,rr.cancer_type,rr.chrom,rr.pos
+select rr.detection_result
 from (
 select split(regexp_replace(regexp_extract(datas,'^\\[(.+)\\]$',1),'\\}\\,\\{', '\\}\\|\\|\\{'),'\\|\\|') as str
-from chemical_2) pp
+from chemical_5) pp
 lateral view explode(pp.str) ss as col 
-lateral view json_tuple(ss.col,'sample_id','gene','locus','detection_result','cancer_type','chrom','pos') rr as sample_id,gene,locus,detection_result,cancer_type,chrom,pos where cancer_type='卵巢癌';
+lateral view json_tuple(ss.col,'sample_id','gene','locus','detection_result','cancer_type','chrom','pos') rr as sample_id,gene,locus,detection_result,cancer_type,chrom,pos where gene='XRCC1' AND chrom='chr19';
 ``` 
